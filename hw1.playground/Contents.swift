@@ -22,31 +22,39 @@ class Words {
 //: ### variables the same type? If not, why?
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: They are not the same type. The instance variables are implictly unwrapped optionals
+//: (denoted by the !) while the values passed into **init** are regular optionals
+//: (denoted by the ?). The problem with implictly unwrapped optionals is that we forcefully
+//: unwrapped them, so they might contain type nil. If type nil is put into the **init**
+//: it will cause problems.
 
 
 //: ## Q2: Variable Types and Function Types
-    func arePalindromes(words: [String]) -> Bool {
+    class func arePalindromes(words: [String]) -> Bool {
         let reversedWords = words.map() {String($0.characters.reverse())}
-        var numElements = words.count
+        let numElements = words.count
         
-        for let i = 0; i < numElements; i++ {
+        for var i = 0; i < numElements; i++ {
             if words[i] != reversedWords[i] {
                 return false
             }
         }
+        return true
     }
 //: ### Why does the compiler dislike the **for loop**? Fix it.
 //: ### What else is wrong with this function? You may have to refer to (but **not**
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: The compiler disliked the for loop because i was set as a let, which meant it could not be changed
+//: when we do want i to increment, so we had to change it to a var to let it increment. When all the 
+//: words are palindromes, the function doesn't return true. Since numElements doesn't change, let it
+//: be a let. Also, add "class" in front of "func" since this is a class function.
 
 
 //: ## Q3: More Functions and Object Initialization
-    class func isAnagram() -> Bool {
-        var countLetters : [Character : Int] //Line X
+    func isAnagram() -> Bool {
+        var countLetters = [Character : Int]() //Line X
         var lenA = self.wordA.characters.count
         var lenB = self.wordB.characters.count
         
@@ -81,7 +89,7 @@ class Words {
             }
         }
         
-        return nil
+        return true
     }
 //: ### What is the problem with declaring **countLetters** as we do in **Line X**,
 //: ### and then using it in **Line Y**? Fix it (by only changing **Line X**).
@@ -89,7 +97,9 @@ class Words {
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: Need to initialize countLetters with the proper syntax. Nil is also incompatiable
+//: with type 'Bool' so we can't return nil, instead return true. This has instance variables
+//: so cannot be a class function.
     
     
 }
